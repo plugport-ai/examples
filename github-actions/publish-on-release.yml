@@ -1,0 +1,21 @@
+# Publish a new version of your MCP server whenever you tag a release.
+# Copy to .github/workflows/ in your API's repository.
+name: Publish MCP server
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  plugport:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: plugport-ai/publish@v1
+        with:
+          key: ${{ secrets.PLUGPORT_KEY }}
+          server: ${{ vars.PLUGPORT_SERVER }} # srv_…
+          spec: openapi.yaml

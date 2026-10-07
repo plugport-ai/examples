@@ -1,0 +1,5 @@
+{
+  "clients": {
+    "trusted_hosts": ["claude.ai", "chatgpt.com", "vscode.dev", "cursor.com", "agents.acme.example"]
+  }
+}

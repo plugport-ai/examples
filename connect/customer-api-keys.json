@@ -1,0 +1,8 @@
+{
+  "key": {
+    "label": "Acme API key",
+    "help": "Find it in the Acme dashboard under Settings → API keys.",
+    "help_url": "https://dashboard.acme.example/settings/api-keys",
+    "verify": { "method": "GET", "path": "/me", "identity": "/id" }
+  }
+}

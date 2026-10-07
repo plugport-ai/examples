@@ -1,0 +1,5 @@
+[
+  { "action": "exclude", "paths": ["/internal/**"] },
+  { "action": "exclude", "tags": ["reports"] },
+  { "action": "include", "operation_ids": ["deleteInvoice"] }
+]

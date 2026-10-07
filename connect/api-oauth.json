@@ -1,0 +1,11 @@
+{
+  "upstream_oauth": {
+    "authorize_url": "https://auth.acme.example/oauth/authorize",
+    "token_url": "https://auth.acme.example/oauth/token",
+    "client_id": "plugport-acme",
+    "scopes": ["invoices:read", "invoices:write"],
+    "issuer": "https://auth.acme.example",
+    "identity": { "method": "GET", "path": "/me", "identity": "/id" }
+  },
+  "upstream_client_secret": "the client secret of your OAuth app"
+}

@@ -1,0 +1,27 @@
+# Import a pull request's spec without publishing, and fail when Plugport
+# warns about it (operations it can't use, missing descriptions).
+# An import updates the server's tools even unpublished, so check against a
+# staging server, never the one your customers use. Pull requests from forks
+# don't get secrets: this runs for your own branches.
+name: Check MCP tools
+
+on:
+  pull_request:
+    paths: ["openapi.yaml"]
+
+permissions:
+  contents: read
+
+jobs:
+  plugport:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: plugport-ai/publish@v1
+        with:
+          key: ${{ secrets.PLUGPORT_KEY }}
+          server: ${{ vars.PLUGPORT_STAGING_SERVER }} # a staging server's srv_…
+          spec: openapi.yaml
+          publish: false
+          fail-on-warnings: true

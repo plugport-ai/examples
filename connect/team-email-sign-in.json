@@ -1,0 +1,8 @@
+{
+  "sign_in": {
+    "mode": "email",
+    "domains": ["acme.com"],
+    "emails": ["contractor@partner.example"]
+  },
+  "toolsets": ["read-only", "billing"]
+}
