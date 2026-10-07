@@ -1,4 +1,5 @@
-# Publish a new version of your MCP server whenever you tag a release.
+# Publish a new version of your MCP server whenever you tag a release, and
+# apply its policy first (its tests run on the release's tools).
 # Copy to .github/workflows/ in your API's repository.
 name: Publish MCP server
 
@@ -19,3 +20,4 @@ jobs:
           key: ${{ secrets.PLUGPORT_KEY }}
           server: ${{ vars.PLUGPORT_SERVER }} # srv_…
           spec: openapi.yaml
+          policy: plugport-policy.json # optional: the server's policy

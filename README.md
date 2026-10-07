@@ -5,9 +5,9 @@ well. These examples show the parts you write yourself.
 
 | | |
 |---|---|
-| [`invoices/`](invoices) | A spec that curates its own tools with `x-mcp`, and server rules that include or exclude operations on every import. |
+| [`invoices/`](invoices) | A spec that curates its own tools with `x-mcp`, server rules that include or exclude operations on every import, and a policy that decides which calls go through. |
 | [`connect/`](connect) | How end users connect over OAuth: email sign-in for your team, your customers' own API keys, or your API's own OAuth. |
-| [`github-actions/`](github-actions) | Publish a new version on every release with [`plugport-ai/publish`](https://github.com/plugport-ai/publish), and check pull requests. |
+| [`github-actions/`](github-actions) | Publish a new version and apply the policy on every release with [`plugport-ai/publish`](https://github.com/plugport-ai/publish), and check pull requests. |
 
 ## Connecting clients
 

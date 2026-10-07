@@ -1,0 +1,61 @@
+{
+  "default": "allow",
+  "rules": [
+    {
+      "name": "staff",
+      "when": "caller.kind == \"connection\" && caller.via == \"email\" && caller.domain == \"acme.com\"",
+      "effect": "allow"
+    },
+    {
+      "name": "no deletes",
+      "when": "tool.destructive",
+      "effect": "deny",
+      "message": "Only Acme staff delete invoices. Void it instead, or ask billing@acme.com."
+    },
+    {
+      "name": "big invoices",
+      "when": "tool.name == \"create_invoice\" && args.amount > 1000000",
+      "effect": "deny",
+      "message": "Invoices over 10,000 need a person: create them in the Acme dashboard."
+    },
+    {
+      "name": "evening sends",
+      "when": "tool.name == \"send_invoice\" && now.getHours(\"Europe/Berlin\") >= 18",
+      "effect": "deny",
+      "message": "Invoices are sent during office hours (Berlin time); try again tomorrow.",
+      "dry_run": true
+    }
+  ],
+  "tests": [
+    {
+      "name": "staff delete",
+      "call": { "tool": "delete_invoice", "args": { "id": "inv_42" }, "caller": { "kind": "connection", "via": "email", "subject": "ana@acme.com" } },
+      "expect": "allow"
+    },
+    {
+      "name": "agents with a key don't",
+      "call": { "tool": "delete_invoice", "args": { "id": "inv_42" }, "caller": { "kind": "key" } },
+      "expect": "deny"
+    },
+    {
+      "name": "a small invoice",
+      "call": { "tool": "create_invoice", "args": { "customer": "cus_7", "amount": 12000, "currency": "eur" }, "caller": { "kind": "key" } },
+      "expect": "allow"
+    },
+    {
+      "name": "a big invoice",
+      "call": { "tool": "create_invoice", "args": { "customer": "cus_7", "amount": 2500000, "currency": "eur" }, "caller": { "kind": "key" } },
+      "expect": "deny"
+    },
+    {
+      "name": "staff create big invoices",
+      "call": { "tool": "create_invoice", "args": { "customer": "cus_7", "amount": 2500000, "currency": "eur" }, "caller": { "kind": "connection", "via": "email", "subject": "ana@acme.com" } },
+      "expect": "allow"
+    },
+    {
+      "name": "evening sends only run dry",
+      "call": { "tool": "send_invoice", "args": { "id": "inv_42" }, "caller": { "kind": "key" }, "at": "2026-10-07T19:30:00+02:00" },
+      "expect": "allow"
+    }
+  ]
+}
